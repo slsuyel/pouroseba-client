@@ -1,0 +1,89 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import apiSlice from "../apiSlice";
+
+const userApi = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    sonodApply: builder.mutation({
+      query: ({ bn, token, en }) => ({
+        url: "/sonod/submit",
+        method: "POST",
+        body: { bn, en },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["sonod-action"],
+    }),
+    renewSonod: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/sonod/renew/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["sonod-action"],
+    }),
+
+    sonodSearch: builder.mutation({
+      query: ({ sonodType, sonodNo }) => ({
+        url: `/sonod/search?sonod_name=${sonodType}&sonod_Id=${sonodNo}`,
+        method: "Post",
+      }),
+    }),
+
+    createHolding: builder.mutation({
+      query: ({ data }) => ({
+        url: `/user/holdingtax`,
+        method: "Post",
+        body: data,
+      }),
+      invalidatesTags: ["holding-create-update"],
+    }),
+
+    unionInfo: builder.query({
+      query: ({ unionName, token }) => ({
+        url: `/global/uniouninfo?name=${unionName}`,
+        method: "Get",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["sonod-action"],
+    }),
+
+    getUnionInfo: builder.mutation({
+      query: ({ unionName, token }) => ({
+        url: `/global/uniouninfo?name=${unionName}`,
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+
+    tradeInfo: builder.query({
+      query: ({ unionName }) => ({
+        url: `/global/uniouninfo?name=${unionName}&type=TradeLicenseKhat`,
+      }),
+    }),
+    dbMetrics: builder.query({
+      query: ({ token }) => ({
+        url: `/user/dashboard/metrics`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
+  }),
+});
+
+export const {
+  useSonodApplyMutation,
+  useUnionInfoQuery,
+  useTradeInfoQuery,
+  useSonodSearchMutation,
+  useCreateHoldingMutation,
+  useRenewSonodMutation,
+  useDbMetricsQuery,
+  useGetUnionInfoMutation,
+} = userApi;
