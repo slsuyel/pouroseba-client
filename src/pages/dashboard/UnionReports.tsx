@@ -24,7 +24,7 @@ const UnionReports = () => {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     console.log("ফর্ম ডেটা:", formData);
-    const url = `https://api.uniontax.gov.bd/payment/report/download?union=${unionInfo?.short_name_e}&from=${formData.fromDate}&to=${formData.toDate}&sonod_type=${formData.sonod}&token=${token}`;
+    const url = `https://api.pouroseba.gov.bd/payment/report/download?union=${unionInfo?.short_name_e}&from=${formData.fromDate}&to=${formData.toDate}&sonod_type=${formData.sonod}&token=${token}`;
     window.open(url, "_blank");
   };
 

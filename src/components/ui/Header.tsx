@@ -54,7 +54,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleService = (serviceLink: string) => {
-    if (unionInfo?.short_name_e == "uniontax") {
+    if (unionInfo?.short_name_e == "pouroseba") {
       message.warning("পৌরসভা  নির্বাচন করুন");
       setNoUnion(true);
       return;
@@ -130,7 +130,7 @@ const Header = () => {
       <div className="container mx-auto row">
         <Marquee className="defaltColor py-1 text-white">
           <span style={{ fontSize: 16 }}>
-            পৌরসভা পরিষদের ডিজিটাল অনলাইন সেবা সিস্টেম uniontax.gov.bd –তে
+            পৌরসভা পরিষদের ডিজিটাল অনলাইন সেবা সিস্টেম pouroseba.gov.bd –তে
             আপনাকে স্বাগতম।
           </span>
         </Marquee>

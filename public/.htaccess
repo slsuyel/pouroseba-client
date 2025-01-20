@@ -3,13 +3,13 @@
     
     # Redirect www to non-www for HTTPS
     RewriteCond %{HTTPS} on
-    RewriteCond %{HTTP_HOST} ^www\.uniontax\.gov\.bd$ [NC]
-    RewriteRule ^(.*)$ https://uniontax.gov.bd/$1 [L,R=301]
+    RewriteCond %{HTTP_HOST} ^www\.pouroseba\.gov\.bd$ [NC]
+    RewriteRule ^(.*)$ https://pouroseba.gov.bd/$1 [L,R=301]
     
     # Redirect www to non-www for HTTP (optional)
     RewriteCond %{HTTPS} off
-    RewriteCond %{HTTP_HOST} ^www\.uniontax\.gov\.bd$ [NC]
-    RewriteRule ^(.*)$ http://uniontax.gov.bd/$1 [L,R=301]
+    RewriteCond %{HTTP_HOST} ^www\.pouroseba\.gov\.bd$ [NC]
+    RewriteRule ^(.*)$ http://pouroseba.gov.bd/$1 [L,R=301]
     
     # Existing rules
     RewriteBase /subdirectory

@@ -9,7 +9,7 @@ const RightSidebar = () => {
 
   return (
     <>
-      {unionInfo && unionInfo.short_name_e !== "uniontax" ? (
+      {unionInfo && unionInfo.short_name_e !== "pouroseba" ? (
         <div className=" pt-3 col-md-3 services">
           {" "}
           <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>

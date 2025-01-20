@@ -4,5 +4,23 @@
     "district_id": "53",
     "name": "debiganj",
     "bn_name": "দেবীগঞ্জ"
+  },
+  {
+    "id": "2",
+    "district_id": "53",
+    "name": "panchagarh",
+    "bn_name": "পঞ্চগড়"
+  },
+  {
+    "id": "3",
+    "district_id": "53",
+    "name": "boda",
+    "bn_name": "বোদা"
+  },
+  {
+    "id": "3",
+    "district_id": "54",
+    "name": "dinajpur",
+    "bn_name": "দিনাজপুর"
   }
 ]

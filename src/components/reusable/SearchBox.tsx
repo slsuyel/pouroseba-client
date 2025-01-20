@@ -122,7 +122,7 @@ const SearchBox: React.FC = () => {
             >
               {pourosebas.map((pouroseba) => (
                 <Option key={pouroseba.id} value={pouroseba.name}>
-                  {pouroseba.bn_name}
+                  {pouroseba.bn_name} পৌরসভা
                 </Option>
               ))}
             </Select>

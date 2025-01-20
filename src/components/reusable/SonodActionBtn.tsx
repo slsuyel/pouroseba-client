@@ -33,7 +33,9 @@ const SonodActionBtn = ({
   const [view, setView] = useState(false);
   const [viewEn, setViewEn] = useState(false);
   const [textareaValue, setTextareaValue] = useState(item?.prottoyon);
-  const [textareaValueEn, setTextareaValueEn] = useState(item?.english_prottoyon);
+  const [textareaValueEn, setTextareaValueEn] = useState(
+    item?.english_prottoyon
+  );
 
   const handleView = () => {
     setView(true);
@@ -107,9 +109,9 @@ const SonodActionBtn = ({
     }
   };
 
-const handleCancelSonod = ()=>{
-  console.log(item.id)
-}
+  const handleCancelSonod = () => {
+    console.log(item.id);
+  };
 
   const menu = (
     <Menu>
@@ -135,7 +137,7 @@ const handleCancelSonod = ()=>{
       <Menu.Item className="border my-1 border-success" key="receipt">
         <Link
           className="text-decoration-none text-success "
-          to={`https://api.uniontax.gov.bd/applicant/copy/download/${item.id}`}
+          to={`https://api.pouroseba.gov.bd/applicant/copy/download/${item.id}`}
           target="_blank"
         >
           প্রাপ্তী স্বীকারপত্র
@@ -170,7 +172,7 @@ const handleCancelSonod = ()=>{
       <Menu.Item className="border my-1 border-success" key="invoice">
         <Link
           className="text-decoration-none"
-          to={`https://api.uniontax.gov.bd/sonod/invoice/download/${item.id}`}
+          to={`https://api.pouroseba.gov.bd/sonod/invoice/download/${item.id}`}
           target="_blank"
         >
           রশিদ প্রিন্ট
@@ -178,7 +180,7 @@ const handleCancelSonod = ()=>{
       </Menu.Item>
       {condition === "Pending" && (
         <Menu.Item className="border my-1 border-danger" key="cancel">
-          <button onClick={handleCancelSonod} className="border-0" >
+          <button onClick={handleCancelSonod} className="border-0">
             বাতিল করুন
           </button>
         </Menu.Item>
@@ -237,7 +239,7 @@ const handleCancelSonod = ()=>{
               <Input.TextArea
                 rows={8}
                 cols={40}
-                value={textareaValue  || ""}
+                value={textareaValue || ""}
                 onChange={(e) => setTextareaValue(e.target.value)}
                 placeholder="Enter text here..."
                 style={{ width: "100%" }}
@@ -256,7 +258,7 @@ const handleCancelSonod = ()=>{
                 <Input.TextArea
                   rows={8}
                   cols={40}
-                  value={textareaValueEn  || ""}
+                  value={textareaValueEn || ""}
                   onChange={(e) => setTextareaValueEn(e.target.value)}
                   placeholder="Enter text here..."
                   style={{ width: "100%" }}

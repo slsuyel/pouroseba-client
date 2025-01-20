@@ -130,7 +130,7 @@ const SonodManagement = () => {
                       <td>
                         <Link
                           target="_blank"
-                          to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+                          to={`https://api.pouroseba.gov.bd/sonod/download/${item.id}`}
                           className="btn btn-success btn-sm me-1"
                         >
                           বাংলা সনদ
@@ -138,7 +138,7 @@ const SonodManagement = () => {
                         {item.hasEnData === 1 && (
                           <Link
                             target="_blank"
-                            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
+                            to={`https://api.pouroseba.gov.bd/sonod/download/${item.id}?en=true`}
                             className="btn btn-success btn-sm mr-1"
                           >
                             ইংরেজি সনদ
@@ -203,7 +203,7 @@ const SonodManagement = () => {
                         <td>
                           <Link
                             target="_blank"
-                            to={`https://api.uniontax.gov.bd/sonod/download/${item.id}`}
+                            to={`https://api.pouroseba.gov.bd/sonod/download/${item.id}`}
                             className="btn btn-success btn-sm me-1"
                           >
                             বাংলা সনদ
@@ -211,7 +211,7 @@ const SonodManagement = () => {
                           {item.hasEnData === 1 && (
                             <Link
                               target="_blank"
-                              to={`https://api.uniontax.gov.bd/sonod/download/${item.id}?en=true`}
+                              to={`https://api.pouroseba.gov.bd/sonod/download/${item.id}?en=true`}
                               className="btn btn-success btn-sm mr-1"
                             >
                               ইংরেজি সনদ

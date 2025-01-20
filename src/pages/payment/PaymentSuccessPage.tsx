@@ -191,7 +191,7 @@ const PaymentSuccessPage: React.FC = () => {
                     Back to Home
                   </Link>
                   <a
-                    href={`https://api.uniontax.gov.bd/applicant/copy/download/${sonodId}`}
+                    href={`https://api.pouroseba.gov.bd/applicant/copy/download/${sonodId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-success"
@@ -199,7 +199,7 @@ const PaymentSuccessPage: React.FC = () => {
                     Applicant Copy
                   </a>
                   <a
-                    href={`https://api.uniontax.gov.bd/sonod/invoice/download/${sonodId}`}
+                    href={`https://api.pouroseba.gov.bd/sonod/invoice/download/${sonodId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-success"

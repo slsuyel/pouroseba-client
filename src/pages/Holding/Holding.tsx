@@ -36,7 +36,7 @@ const Holding = () => {
       search: submittedSearchTerm,
       page: currentPage,
       unioun:
-        unionInfo && unionInfo.short_name_e == "uniontax"
+        unionInfo && unionInfo.short_name_e == "pouroseba"
           ? smallUnion
           : unionInfo && unionInfo.short_name_e,
     },
@@ -155,7 +155,7 @@ const Holding = () => {
     <div className="row mx-auto container my-3">
       <div className="mainBody col-md-9 mt-3">
         <div className="card">
-          {unionInfo && unionInfo.short_name_e !== "uniontax" ? (
+          {unionInfo && unionInfo.short_name_e !== "pouroseba" ? (
             ""
           ) : (
             <>
