@@ -1,9 +1,10 @@
 @import url("https://fonts.maateen.me/kalpurush/font.css");
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 * {
-  font-family: "Kalpurush", sans-serif;
+  font-family: "Kalpurush", "Nunito Sans", serif;
 }
 body {
-  font-family: "Kalpurush", sans-serif;
+  font-family: "Kalpurush", "Nunito Sans", serif;
   font-size: medium;
 }
 /* 
@@ -14,10 +15,10 @@ body {
   color: var(--defaultColor) !important;
 }
 .form-control {
-  font-family: "Kalpurush", sans-serif;
+  font-family: "Kalpurush", "Nunito Sans", serif;
 }
 .ant-input {
-  font-family: "Kalpurush", sans-serif;
+  font-family: "Kalpurush", "Nunito Sans", serif;
 }
 
 label {

@@ -189,7 +189,7 @@ const SonodManagement = () => {
                       <td>{new Date(item.created_at).toLocaleString()}</td>
                       <td>
                         <span
-                          className={`d-block font-monospace fs-6 p-1 rounded text-white ${
+                          className={`d-block  fs-6 p-1 rounded text-white ${
                             item.payment_status === "Paid"
                               ? "bg-success"
                               : "bg-danger"

@@ -47,10 +47,10 @@ const UnionProfile = () => {
   });
 
   const cTypeOptions = [
-    { bn: "চেয়ারম্যান", en: "Chairman" },
-    { bn: "প্যানেল চেয়ারম্যান ১", en: "Panel Chairman 1" },
-    { bn: "প্যানেল চেয়ারম্যান ২", en: "Panel Chairman 2" },
-    { bn: "প্যানেল চেয়ারম্যান ৩", en: "Panel Chairman 3" },
+    { bn: "মেয়র", en: "Chairman" },
+    { bn: "প্যানেল মেয়র ১", en: "Panel Chairman 1" },
+    { bn: "প্যানেল মেয়র ২", en: "Panel Chairman 2" },
+    { bn: "প্যানেল মেয়র ৩", en: "Panel Chairman 3" },
     { bn: "প্রশাসক", en: "Deputy Commissioner" },
     { bn: "সদস্য/সদস্যা", en: "Member" },
   ];
@@ -149,13 +149,13 @@ const UnionProfile = () => {
     try {
       const res = await updateUnion({ data: formData, token }).unwrap();
       if (res.status_code === 200) {
-        message.success("ইউনিয়ন তথ্য সফলভাবে আপডেট করা হয়েছে।");
+        message.success("তথ্য সফলভাবে আপডেট করা হয়েছে।");
       } else {
-        message.error("Failed to update union information.");
+        message.error("Failed to update  information.");
       }
     } catch (error) {
-      console.error("Failed updating union:", error);
-      message.error("Failed to update union information. Please try again.");
+      console.error("Failed updating :", error);
+      message.error("Failed to update  information. Please try again.");
     }
   };
 
@@ -172,7 +172,7 @@ const UnionProfile = () => {
         <div className="card-body">
           <div className="row">
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের পুরো নাম (বাংলা)" name="full_name">
+              <Form.Item label="পৌরসভার  পুরো নাম (বাংলা)" name="full_name">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -182,10 +182,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item
-                label="ইউনিয়নের পুরো নাম (ইংরেজি)"
-                name="full_name_en"
-              >
+              <Form.Item label="পৌরসভার  পুরো নাম (ইংরেজি)" name="full_name_en">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -196,7 +193,7 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item
-                label="ইউনিয়নের সংক্ষিপ্ত নাম (বাংলা)"
+                label="পৌরসভার  সংক্ষিপ্ত নাম (বাংলা)"
                 name="short_name_b"
               >
                 <Input
@@ -248,7 +245,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের নাম (বাংলা)" name="c_name">
+              <Form.Item label="প্রশাসকের নাম (বাংলা)" name="c_name">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -258,7 +255,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের নাম (ইংরেজি)" name="c_name_en">
+              <Form.Item label="প্রশাসকের নাম (ইংরেজি)" name="c_name_en">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -268,7 +265,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের ধরন (বাংলা)" name="c_type">
+              <Form.Item label="প্রশাসকের ধরন (বাংলা)" name="c_type">
                 <Select style={{ height: 40 }} onChange={handleCTypeChange}>
                   {cTypeOptions.map((option) => (
                     <Select.Option key={option.bn} value={option.bn}>
@@ -279,7 +276,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4 d-none">
-              <Form.Item label="চেয়ারম্যানের ধরন (ইংরেজি)" name="c_type_en">
+              <Form.Item label="প্রশাসকের ধরন (ইংরেজি)" name="c_type_en">
                 <Input
                   style={{ height: 40 }}
                   readOnly
@@ -309,7 +306,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের ইমেইল" name="c_email">
+              <Form.Item label="প্রশাসকের ইমেইল" name="c_email">
                 <Input
                   style={{ height: 40 }}
                   type="email"
@@ -331,7 +328,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের বিবরন (বাংলা)" name="u_description">
+              <Form.Item label="পৌরসভার  বিবরন (বাংলা)" name="u_description">
                 <Input.TextArea
                   rows={6}
                   onChange={handleChange}
@@ -341,7 +338,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের নোটিশ (বাংলা)" name="u_notice">
+              <Form.Item label="পৌরসভার  নোটিশ (বাংলা)" name="u_notice">
                 <Input.TextArea
                   rows={6}
                   onChange={handleChange}
@@ -351,7 +348,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের ম্যাপ" name="google_map">
+              <Form.Item label="পৌরসভার  ম্যাপ" name="google_map">
                 <Input.TextArea
                   rows={6}
                   onChange={handleChange}
@@ -410,7 +407,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="চেয়ারম্যানের স্বাক্ষর" name="c_signture">
+              <Form.Item label="প্রশাসকের স্বাক্ষর" name="c_signture">
                 <Input
                   type="file"
                   onChange={(e) => handleFileChange(e, "c_signture")}
@@ -448,7 +445,7 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="ইউনিয়নের ছবি" name="u_image">
+              <Form.Item label="পৌরসভার  ছবি" name="u_image">
                 <Input
                   type="file"
                   onChange={(e) => handleFileChange(e, "u_image")}

@@ -52,7 +52,7 @@ const Summary = ({ data }: any) => {
     {
       icon: totalFees,
       title: "মোট আদায়কৃত ফি'র পরিমাণ",
-      value: (data?.totalRevenue).toFixed(2),
+      value: data?.totalRevenue,
     },
   ];
 
