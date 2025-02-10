@@ -1,3 +1,4 @@
+import map from "/rangpur-map.png";
 import dc from "../../assets/images/dc_anchagarh.png";
 import uno from "../../assets/images/uno-pic2.png";
 import suport from "../../assets/images/support.png";
@@ -18,7 +19,7 @@ const RightSidebar = () => {
           <p className="sidebaruser text-center">
             <img
               className=" object-fit-cover"
-              src="https://www.newagebd.com/files/records/news/202303/195797_133.JPG"
+              src={map}
               width="100%"
               height="100px"
               alt=""

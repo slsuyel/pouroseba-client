@@ -21,8 +21,8 @@ const Notice = () => {
                 <td>2024-2025 অর্থবছরের ইজারা।</td>
                 <td className="text-center">
                   <a
-                    target="_blank"
-                    href="/public/ইজারা নোটিশ বোর্ডে দিয়েন.pdf"
+                    // target="_blank"
+                    href=""
                     className="btn_main ms-2 px-3 text-decoration-none"
                   >
                     Download
@@ -34,8 +34,8 @@ const Notice = () => {
                 <td>গ্রাম পুলিশ নিয়োগ বিজ্ঞপ্তি।</td>
                 <td className="text-center">
                   <a
-                    target="_blank"
-                    href="/public/Village-Police-22.pdf"
+                    // target="_blank"
+                    href=""
                     className="btn_main ms-2 px-3 text-decoration-none"
                   >
                     Download
