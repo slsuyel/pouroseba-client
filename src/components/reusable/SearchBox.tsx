@@ -1,4 +1,5 @@
-import { TDistrict, TDivision, TPouroseba } from "@/types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TDistrict, TDivision } from "@/types";
 import React, { useEffect, useState } from "react";
 import { Form, Select } from "antd";
 
@@ -13,7 +14,7 @@ const SearchBox: React.FC = () => {
   );
   const [divisions, setDivisions] = useState<TDivision[]>([]);
   const [districts, setDistricts] = useState<TDistrict[]>([]);
-  const [pourosebas, setPourosebas] = useState<TPouroseba[]>([]);
+  const [pourosebas, setPourosebas] = useState<any[]>([]);
 
   useEffect(() => {
     fetch("/divisions.json")
@@ -44,7 +45,7 @@ const SearchBox: React.FC = () => {
     if (selectedDistrict) {
       fetch("/pouroseba.json")
         .then((response) => response.json())
-        .then((data: TPouroseba[]) => {
+        .then((data: any[]) => {
           const filteredUpazilas = data.filter(
             (upazila) => upazila.district_id === selectedDistrict
           );
