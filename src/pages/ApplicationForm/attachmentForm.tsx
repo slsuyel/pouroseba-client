@@ -1,9 +1,15 @@
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-const AttachmentForm = () => {
+const AttachmentForm = ({
+  setFrontFile,
+  setBackFile,
+  setBirthCertificateFile,
+}: any) => {
   const [attachmentType, setAttachmentType] = useState("national_id");
   const [frontPreview, setFrontPreview] = useState<string | null>(null);
   const [backPreview, setBackPreview] = useState<string | null>(null);
@@ -20,12 +26,13 @@ const AttachmentForm = () => {
 
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>,
+    setFile: React.Dispatch<React.SetStateAction<File | null>>,
     setPreview: React.Dispatch<React.SetStateAction<string | null>>
   ) => {
     const file = event.target.files?.[0];
     if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setPreview(previewUrl);
+      setFile(file);
+      setPreview(URL.createObjectURL(file)); // Generate preview URL
     }
   };
 
@@ -57,25 +64,22 @@ const AttachmentForm = () => {
           <div className="col-md-4">
             <Form.Item
               name="applicant_national_id_front_attachment"
-              label="Upload National ID Front"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: "Please upload the front side of your ID",
-              //   },
-              // ]}
+              label="সামনের পাতা (জাতীয় পরিচয়পত্র)"
             >
               <div>
                 <Input
                   type="file"
-                  onChange={(e) => handleFileChange(e, setFrontPreview)}
+                  accept="image/*"
+                  onChange={(e) =>
+                    handleFileChange(e, setFrontFile, setFrontPreview)
+                  }
                 />
                 {frontPreview && (
                   <img
                     src={frontPreview}
                     alt="National ID Front Preview"
                     className="border img-thumbnail"
-                    style={{ width: "100%", marginTop: 10 }}
+                    style={{ width: "100%", marginTop: 10,height:"auto" }}
                   />
                 )}
               </div>
@@ -88,15 +92,18 @@ const AttachmentForm = () => {
             >
               <div>
                 <Input
+                  accept="image/*"
                   type="file"
-                  onChange={(e) => handleFileChange(e, setBackPreview)}
+                  onChange={(e) =>
+                    handleFileChange(e, setBackFile, setBackPreview)
+                  }
                 />
                 {backPreview && (
                   <img
                     src={backPreview}
                     alt="National ID Back Preview"
                     className="border img-thumbnail"
-                    style={{ width: "100%", marginTop: 10 }}
+                    style={{ width: "100%", marginTop: 10,height:"auto"  }}
                   />
                 )}
               </div>
@@ -120,8 +127,13 @@ const AttachmentForm = () => {
               <div>
                 <Input
                   type="file"
+                  accept="image/*"
                   onChange={(e) =>
-                    handleFileChange(e, setBirthCertificatePreview)
+                    handleFileChange(
+                      e,
+                      setBirthCertificateFile,
+                      setBirthCertificatePreview
+                    )
                   }
                 />
                 {birthCertificatePreview && (
@@ -129,7 +141,7 @@ const AttachmentForm = () => {
                     src={birthCertificatePreview}
                     alt="Birth Certificate Preview"
                     className="border img-thumbnail"
-                    style={{ width: "100%", marginTop: 10 }}
+                    style={{ width: "100%", marginTop: 10 ,height:"auto" }}
                   />
                 )}
               </div>

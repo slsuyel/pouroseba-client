@@ -1,58 +1,62 @@
-import { RootState } from "@/redux/features/store";
-import { useAppSelector } from "@/redux/features/hooks";
+"use client"
 
-import icon2 from "../../assets/icons/trade.png";
-import { useNavigate } from "react-router-dom";
-import { message, Modal } from "antd";
-import { useState } from "react";
-import SearchBox from "../reusable/SearchBox";
+import type { RootState } from "@/redux/features/store"
+import { useAppSelector } from "@/redux/features/hooks"
+import icon2 from "../../assets/icons/trade.png"
+import { useNavigate } from "react-router-dom"
+import { message, Modal } from "antd"
+import { useState } from "react"
+import SearchBox from "../reusable/SearchBox"
+import './service-box.css'
 
 const ServiceBox = () => {
-  const [noUnion, setNoUnion] = useState(false);
-  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const [noUnion, setNoUnion] = useState(false)
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList)
+  const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleService = (service: string) => {
-    console.log(unionInfo);
+    console.log(unionInfo)
 
     if (unionInfo?.short_name_e === "pouroseba") {
       message.warning("অনুগ্রহ করে আপনার পৌরসভা  নির্বাচন করুন");
       setNoUnion(true);
       return;
     }
-    navigate(`/application/${service}`);
-  };
+    navigate(`/application/${service}`)
+  }
 
   return (
-    <div className="row mx-auto services pt-3">
-      <div className="col-md-12">
-        <h6 className="defaltColor  position-relative ps-3 py-2 serviceTitle text-white">
-          সেবাসমূহ
-        </h6>
+    <div className="row mx-auto services pt-4">
+      <div className="col-md-12 mb-3">
+        <h5 className="service-section-title position-relative ps-3 py-2 text-white rounded-2">সেবাসমূহ</h5>
       </div>
-      {sonodInfo.map((service, index) => (
-        <button
-          onClick={() => handleService(service.bnname)}
-          key={index}
-          className="col-lg-2 col-md-3 col-sm-4 col-6 my-3 text-center border-0 bg-transparent"
-        >
-          <div className="serviceBox py-2">
-            <div className="serviceLogo">
-              <img loading="lazy" src={icon2} alt="" width={60} />
-            </div>
-            <div className="serviceTitle defaltTextColor mt-2">
-              <h6> {service.bnname.slice(0, 20)}</h6>
-            </div>
-          </div>
-        </button>
-      ))}
 
-      <div className="col-md-12">
-        <h6 className="defaltColor  position-relative ps-3 py-2 serviceTitle text-white">
-          ক্যাশলেস পৌরসভা পরিষদ সেবা
-        </h6>
+      <div className="row g-3">
+        {sonodInfo.map((service, index) => (
+          <div key={index} className="col-lg-2 col-md-3 col-sm-4 col-6">
+            <button
+              onClick={() => handleService(service.bnname)}
+              className="service-card w-100 h-100 border-0 bg-transparent"
+            >
+              <div className="service-card-inner p-3 rounded-3 d-flex flex-column align-items-center justify-content-center h-100">
+                <div className="service-icon mb-3 d-flex align-items-center justify-content-center rounded-circle">
+                  <img loading="lazy" src={icon2 || "/placeholder.svg"} alt="icon2" width={40} height={40} />
+                </div>
+                <div className="service-title text-center">
+                  <h6 className="mb-0 fw-semibold">{service.bnname}</h6>
+                </div>
+              </div>
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="col-md-12 mt-5">
+        <h5 className="service-section-title position-relative ps-3 py-2 text-white rounded-2">
+        ক্যাশলেস পৌরসভা পরিষদ সেবা
+        </h5>
 
         <p></p>
       </div>
@@ -70,7 +74,8 @@ const ServiceBox = () => {
         </div>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default ServiceBox;
+export default ServiceBox
+

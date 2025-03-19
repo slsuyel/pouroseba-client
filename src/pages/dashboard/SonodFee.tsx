@@ -4,6 +4,8 @@ import {
   useSonodFeesQuery,
   useUpdateSonodFeesMutation,
 } from "@/redux/api/sonod/sonodApi";
+import { useAppSelector } from "@/redux/features/hooks";
+import { RootState } from "@/redux/features/store";
 import { message } from "antd";
 import { useState, useEffect } from "react";
 
@@ -18,16 +20,15 @@ interface TSonodFee {
 }
 
 const SonodFee = () => {
-  // Fetch the sonod information from the state
+  const userInfo = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
   const { data, isLoading } = useSonodFeesQuery({ token });
   const [updateSonod, { isLoading: updating }] = useUpdateSonodFeesMutation();
   const [feesData, setFeesData] = useState<TSonodFee[]>([]);
 
-  // Update feesData when the data changes
   useEffect(() => {
-    if (data?.data) {
-      setFeesData(data.data);
+    if (data?.data?.data) {
+      setFeesData(data?.data?.data);
     }
   }, [data]);
 
@@ -35,7 +36,6 @@ const SonodFee = () => {
     return <Loader />;
   }
 
-  // Handler to update fees value
   const handleFeeChange = (index: number, value: string) => {
     setFeesData((prevFeesData) => {
       const updatedFeesData = [...prevFeesData];
@@ -71,7 +71,7 @@ const SonodFee = () => {
     }
   };
 
-  const dataSource = feesData.map((d, index) => ({
+  const dataSource = feesData?.map((d, index) => ({
     key: index + 1,
     bnname: d.bnname,
     fees: d.fees,
@@ -95,6 +95,7 @@ const SonodFee = () => {
               <td>{item.bnname}</td>
               <td>
                 <input
+                  disabled={userInfo?.position =="Secretary"}
                   type="number"
                   min={1}
                   value={feesData[index]?.fees || ""}
@@ -110,7 +111,7 @@ const SonodFee = () => {
       <button
         onClick={handleSave}
         className="btn btn-primary mt-3"
-        disabled={updating}
+        disabled={updating || userInfo?.position =="Secretary"}
       >
         {updating ? "Saving..." : "Save Changes"}
       </button>

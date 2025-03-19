@@ -5,16 +5,17 @@ import apiSlice from "../apiSlice";
 const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     sonodApply: builder.mutation({
-      query: ({ bn, token, en }) => ({
+      query: ({ formData, token }) => ({
         url: "/sonod/submit",
         method: "POST",
-        body: { bn, en },
+        body: formData,
         headers: {
           authorization: `Bearer ${token}`,
         },
       }),
       invalidatesTags: ["sonod-action"],
     }),
+
     renewSonod: builder.mutation({
       query: ({ id, data }) => ({
         url: `/sonod/renew/${id}`,
@@ -28,6 +29,12 @@ const userApi = apiSlice.injectEndpoints({
       query: ({ sonodType, sonodNo }) => ({
         url: `/sonod/search?sonod_name=${sonodType}&sonod_Id=${sonodNo}`,
         method: "Post",
+      }),
+    }),
+    sonodSearchById: builder.query({
+      query: (id) => ({
+        url: `/sonod/search?id=${id}`,
+        method: "Get",
       }),
     }),
 
@@ -86,4 +93,5 @@ export const {
   useRenewSonodMutation,
   useDbMetricsQuery,
   useGetUnionInfoMutation,
+  useSonodSearchByIdQuery
 } = userApi;

@@ -1,92 +1,108 @@
-import map from "/rangpur-map.png";
-import dc from "../../assets/images/dc_anchagarh.png";
-import uno from "../../assets/images/uno-pic2.png";
-import suport from "../../assets/images/support.png";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import dc from "../../assets/images/dc_panchagarh.webp";
+import dlg from "../../assets/images/dlg-rangpur.webp";
+import uno from "../../assets/images/uno-pic2.webp";
+import suport from "../../assets/images/support.webp";
 import { RootState } from "@/redux/features/store";
 import { useAppSelector } from "@/redux/features/hooks";
 import Marquee from "react-fast-marquee";
 const RightSidebar = () => {
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const baseUrl = window.origin;
 
   return (
     <>
-      {unionInfo && unionInfo.short_name_e !== "pouroseba" ? (
-        <div className=" pt-3 col-md-3 services">
-          {" "}
+      {unionInfo &&
+        !["pouroseba", "unionservices"].includes(
+          unionInfo.short_name_e as string
+        ) ? (
+        <div className="pt-3 col-md-3 services">
           <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>
-            <h4> এক নজরে {unionInfo?.short_name_b} পৌরসভা </h4>
-          </div>{" "}
-          <p className="sidebaruser text-center">
+            <h4>এক নজরে {unionInfo.short_name_b} পৌরসভা</h4>
+          </div>
+          <div className="">
             <img
-              className=" object-fit-cover"
-              src={map}
+              onError={(e: any) => e.target.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s'}
+              className="object-fit-cover"
+              src={unionInfo.u_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-kSPdyaeGM-OkA-u262eL7B2bcsHuBR0Mg&s"}
               width="100%"
               height="100px"
-              alt=""
+              alt="union-image"
             />
-          </p>
+            <p style={{ fontSize: 12 }} className="sidebaruser mt-3 mb-1">
+              {unionInfo?.u_description || ""}
+            </p>
+          </div>
           <div className="sidebarTitle mb-3 defaltColor">
-            <h4 className=" border-bottom t">নোটিশ</h4>
-
+            <h4 className="border-bottom t">নোটিশ</h4>
             <Marquee direction="left" className="text-white">
-              পৌরসভা পরিষদ হল বাংলাদেশে পল্লী অঞ্চলের সর্বনিম্ন প্রশাসনিক একক।
-              গ্রাম চৌকিদারি আইনের ১৮৭০ এর অধীনে পৌরসভা পরিষদের সৃষ্টি হয়।
-              প্রাথমিক পর্যায়ে এর ভূমিকা নিরাপত্তামূলক কর্মকাণ্ডে সীমাবদ্ধ
-              থাকলেও পরবর্তী কালে এটিই স্থানীয় সরকারের প্রাথমিক ইউনিটের
-              ভিত্তিরুপে গড়ে উঠে।
+              {unionInfo?.u_notice}
             </Marquee>
           </div>
           <div className="sidebarTitle mb-3 defaltColor">
             <h4>জরুরি হটলাইন</h4>
-          </div>{" "}
+          </div>
           <div className="column block">
-            <img width="100%" src={suport} alt="" />
-          </div>{" "}
+            <img width="100%" src={suport} height={"auto"} alt="support" />
+          </div>
         </div>
       ) : (
-        <div className=" pt-3 col-md-3 services">
-          <div className={`sidebarTitle mb-3 defaultColor`}>
+        <div className="pt-3 col-md-3 services">
+          <div className="sidebarTitle mb-3 defaultColor">
             <h4>উপদেষ্টা ও তত্ত্বাবধানে</h4>
-          </div>{" "}
+          </div>
           <p className="sidebaruser text-center">
-            <img width="70%" alt="" src={dc} />
-          </p>{" "}
+            <img
+              width="70%"
+              height={"auto"}
+              alt="unionservices"
+              src={baseUrl.includes("unionservices") ? dlg : dc}
+            />
+          </p>
           <div className="contactInfo text-center">
             <span>
-              <b>জনাব মোঃ সাবেত আলী </b>
-            </span>{" "}
-            <br />{" "}
-            <span>
-              <b>জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট</b>
-            </span>{" "}
+              <b>
+                {baseUrl.includes("unionservices")
+                  ? "মোঃ আবু জাফর"
+                  : "জনাব মোঃ সাবেত আলী "}
+              </b>
+            </span>
             <br />
-          </div>{" "}
+            <span>
+              <b>
+                {baseUrl.includes("unionservices")
+                  ? "পরিচালক, (যুগ্মসচিব) স্থানীয় সরকার"
+                  : "   জেলা প্রশাসক ও জেলা ম্যাজিস্ট্রেট"}
+              </b>
+            </span>
+            <br />
+          </div>
           <div className="sidebarTitle mb-3 defaltColor">
             <h4>পরিকল্পনা ও বাস্তবায়নে</h4>
-          </div>{" "}
+          </div>
           <p className="sidebaruser text-center">
-            <img width="70%" alt="" src={uno} />
-          </p>{" "}
+            <img width="70%" height={"auto"} alt="unio" src={uno} />
+          </p>
           <div className="contactInfo text-center">
             <span>
-              <b> সোহাগ চন্দ্র সাহা</b>
-            </span>{" "}
-            <br />{" "}
+              <b>সোহাগ চন্দ্র সাহা</b>
+            </span>
+            <br />
             <span>
               সিনিয়র সহকারী সচিব (ওএসডি) <br /> জনপ্রশাসন মন্ত্রণালয়
-            </span>{" "}
-            <br />{" "}
+            </span>
+            <br />
             <span>
               <b>প্রাক্তন উপজেলা নির্বাহী অফিসার তেঁতুলিয়া</b>
-            </span>{" "}
+            </span>
             <br />
-          </div>{" "}
+          </div>
           <div className="sidebarTitle mb-3 defaltColor">
             <h4>জরুরি হটলাইন</h4>
-          </div>{" "}
+          </div>
           <div className="column block">
-            <img width="100%" src={suport} alt="" />
-          </div>{" "}
+            <img width="100%" height={"auto"} src={suport} alt="" />
+          </div>
         </div>
       )}
     </>

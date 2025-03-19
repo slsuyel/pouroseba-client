@@ -1,1 +1,0 @@
-# pouroseba-client

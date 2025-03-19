@@ -1,4 +1,4 @@
-import RightSidebar from "../Home/RightSidebar";
+import RightSidebar from '../Home/RightSidebar';
 
 const About = () => {
   return (
@@ -41,14 +41,14 @@ const About = () => {
               <h6 className="defaltColor  position-relative ps-3 py-2 serviceTitle text-white">
                 পৌরসভা পরিষদ ডিজিটাল সেবা
               </h6>
-            </div>{" "}
+            </div>{' '}
             <div className="col-md-12">
               <p
                 style={{
-                  fontSize: "14px",
+                  fontSize: '14px',
                   lineHeight: 2,
-                  color: "rgb(0, 0, 0)",
-                  textAlign: "justify",
+                  color: 'rgb(0, 0, 0)',
+                  textAlign: 'justify',
                 }}
               >
                 পৌরসভা পরিষদ হল বাংলাদেশে পল্লী অঞ্চলের সর্বনিম্ন প্রশাসনিক একক।

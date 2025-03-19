@@ -5,8 +5,10 @@ import HoldingAdd from "@/pages/dashboard/holding/HoldingAdd";
 import HoldingShow from "@/pages/dashboard/holding/HoldingShow";
 import HoldingTax from "@/pages/dashboard/holding/HoldingTax";
 import HoldingTaxEdit from "@/pages/dashboard/holding/HoldingTaxEdit";
+import ImportHolding from "@/pages/dashboard/holding/ImportHolding";
 import SingleHolding from "@/pages/dashboard/holding/SingleHolding";
 import PaymentFailed from "@/pages/dashboard/PaymentFailed";
+import SmsPanel from "@/pages/dashboard/SmsPanel/SmsPanel";
 
 import SonodFee from "@/pages/dashboard/SonodFee";
 import EditSonod from "@/pages/dashboard/SonodManagement/EditSonod";
@@ -25,12 +27,20 @@ export const adminRoutes = [
     element: <UnionReports />,
   },
   {
+    path: "sms",
+    element: <SmsPanel />,
+  },
+  {
     path: "union/profile",
     element: <UnionProfile />,
   },
   {
     path: "holding/tax/",
     element: <HoldingTax />,
+  },
+  {
+    path: "holding/import/",
+    element: <ImportHolding />,
   },
   {
     path: "payment-failed",

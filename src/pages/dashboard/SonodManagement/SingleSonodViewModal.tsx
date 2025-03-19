@@ -189,12 +189,36 @@ const SingleSonodViewModal = ({
           </div>
           <div className="col-md-4 col-6 mt-3">
             <span>ন্যাশনাল আইডি (Front page)</span> <br />
+            {data.applicant_national_id_front_attachment && (
+              <img
+              height={"auto"}
+                className="w-100 img-thumbnail"
+                src={data.applicant_national_id_front_attachment}
+                alt="nid"
+              />
+            )}
           </div>
           <div className="col-md-4 col-6 mt-3">
             <span>ন্যাশনাল আইডি (Back page)</span> <br />
+            {data.applicant_national_id_back_attachment && (
+              <img
+              height={"auto"}
+                className="w-100 img-thumbnail"
+                src={data.applicant_national_id_back_attachment}
+                alt="nid"
+              />
+            )}
           </div>
           <div className="col-md-4 col-6 mt-3">
-            <span>জন্ম নিবন্ধন</span> <br /> <img width="100%" alt="" />
+            <span>জন্ম নিবন্ধন</span> <br />{" "}
+            {data.applicant_birth_certificate_attachment && (
+              <img
+              height={"auto"}
+                className="w-100 img-thumbnail"
+                src={data.applicant_birth_certificate_attachment}
+                alt="birth"
+              />
+            )}
           </div>
         </div>
         <br /> <br />

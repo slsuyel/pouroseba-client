@@ -4,18 +4,23 @@ import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { Button, Form, Input, message, Select } from "antd";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
 interface FailedContactProps {
   sonodId?: string;
   transId?: string;
+  className?: string;
 }
 
-const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
+const FailedContact: React.FC<FailedContactProps> = ({
+  sonodId,
+  transId,
+  className,
+}) => {
   const [paymentFailedTicket, { isLoading }] = usePaymentFailedTicketMutation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<string>("বিকাশ");
@@ -32,11 +37,14 @@ const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
       };
 
       const res = await paymentFailedTicket({ data: submissionData }).unwrap();
-      if (res.status_code === "201") {
-        navigate("/");
+      if (res.status_code == "201") {
+        // navigate("/");
         message.success("আপনার তথ্যগুলো সফলভাবে জমা হয়েছে");
       } else {
-        message.error("তথ্য জমা করতে সমস্যা হয়েছে");
+        console.log(res);
+        message.error(
+          "তথ্য জমা করতে সমস্যা হয়েছে, বা আপনার প্রদানকৃত তথ্য ভুল হতে পারে"
+        );
       }
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -50,7 +58,7 @@ const FailedContact: React.FC<FailedContactProps> = ({ sonodId, transId }) => {
         layout="vertical"
         onFinish={onFinish}
         autoComplete="off"
-        className="mx-auto col-md-6 card p-4"
+        className={`mx-auto  card p-4 ${className ? className : "col-md-6"}`}
       >
         <div className="text-center mb-4">
           <h2>পেমেন্ট ব্যর্থ হয়েছে</h2>

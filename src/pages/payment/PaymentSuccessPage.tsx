@@ -8,6 +8,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import FailedContact from "./FailedContact";
+import { TIpnResposne } from "@/types";
 const succes = "/pay-success.png";
 
 interface TPaymentData {
@@ -56,6 +57,7 @@ interface TPaymentData {
 }
 
 const PaymentSuccessPage: React.FC = () => {
+  const [ipnResponse, setIpnResponse] = useState<TIpnResposne>();
   const [failedPage, setFailedPage] = useState(false);
   const [showDetails, SetShowDetails] = useState(false);
   const [sonodId, SetSonodId] = useState("");
@@ -98,7 +100,8 @@ const PaymentSuccessPage: React.FC = () => {
         }
       } else {
         SetShowDetails(true);
-        console.log(response);
+        console.log({ response });
+        setIpnResponse(response);
       }
     } catch (error) {
       setFailedPage(true);
@@ -122,6 +125,8 @@ const PaymentSuccessPage: React.FC = () => {
       fetchPaymentDetails();
     }
   }, [count, transId, hasCalledApi, fetchPaymentDetails]);
+
+  console.log(ipnResponse);
 
   return (
     <div className="container">
@@ -173,7 +178,7 @@ const PaymentSuccessPage: React.FC = () => {
             <div>
               <div className="col-sm-6 my-5 py-5 text-center w-100">
                 <h2 style={{ color: "#0fad00" }}>Success</h2>
-                <img width={150} src={succes} alt="Success" />
+                <img width={150} height={"auto"} src={succes} alt="Success" />
                 <div className="my-3">
                   <h3>জনাব,</h3>
                   <p
@@ -190,16 +195,22 @@ const PaymentSuccessPage: React.FC = () => {
                   <Link to="/" className="btn btn-danger">
                     Back to Home
                   </Link>
+                  {ipnResponse?.data.myserver.sonod_type !== "holdingtax" && (
+                    <a
+                      href={`https://api.pouroseba.gov.bd/applicant/copy/download/${sonodId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-success"
+                    >
+                      Applicant Copy
+                    </a>
+                  )}
                   <a
-                    href={`https://api.pouroseba.gov.bd/applicant/copy/download/${sonodId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-success"
-                  >
-                    Applicant Copy
-                  </a>
-                  <a
-                    href={`https://api.pouroseba.gov.bd/sonod/invoice/download/${sonodId}`}
+                    href={
+                      ipnResponse?.data.myserver.sonod_type === "holdingtax"
+                        ? `https://api.pouroseba.gov.bd/holding/tax/invoice/${sonodId}`
+                        : `https://api.pouroseba.gov.bd/sonod/invoice/download/${sonodId}`
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-success"

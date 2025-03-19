@@ -4,7 +4,7 @@ import Loader from "@/components/reusable/Loader";
 import { useAllHoldingQuery } from "@/redux/api/sonod/sonodApi";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { message, Pagination } from "antd";
+import { Pagination } from "antd";
 
 export interface THolding {
   id: number;
@@ -58,29 +58,31 @@ const HoldingShow = () => {
         <div className="">
           <div className="card-header">
             <div className="d-flex justify-content-between align-items-center">
-              <h3>হোল্ডিং ট্যাক্স</h3>
+            
               <div>
-                {/* <Link 
-                  to="/holding/tax/bokeya/list?word=1&union=test"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-success"
-                >
-                  বকেয়া রিপোর্ট
-                </Link>{" "} */}
-                <button
-                  className="btn btn-success  me-2"
-                  onClick={() => message.loading("শীঘ্রই আসছে, ধন্যবাদ! 🚀")}
-                >
-                  {" "}
-                  বকেয়া রিপোর্ট
-                </button>
                 <Link
                   to={`/dashboard/holding/list/add/${word}`}
-                  className="btn btn-info"
+                  className="btn btn-info m-1"
                 >
                   হোল্ডিং ট্যাক্স যোগ করুন
                 </Link>
+                <Link
+                  className="btn btn-success  m-1"
+                  target="_blank"
+                  to={`https://api.pouroseba.gov.bd/api/user/holding-tax/export?word_no=${word}&token=${token}`}
+                >
+                  {" "}
+                  Export হোল্ডিং ট্যাক্স
+                </Link>
+                <Link
+                  className="btn btn-success  m-1"
+                  target="_blank"
+                  to={`https://api.pouroseba.gov.bd/holding/tax/bokeya/list?word=${word}&token=${token}`}
+                >
+                  {" "}
+                  বকেয়া রিপোর্ট
+                </Link>
+                
               </div>
             </div>
             <form
@@ -179,7 +181,7 @@ const HoldingShow = () => {
                           pageSize={pageSize}
                           total={totalItems}
                           onChange={handlePageChange}
-                          // Remove showSizeChanger and onShowSizeChange
+                        // Remove showSizeChanger and onShowSizeChange
                         />
                       </div>
                     )}

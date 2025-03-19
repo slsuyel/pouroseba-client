@@ -1,3 +1,4 @@
+
 import {
   useCallipnMutation,
   useCheckPaymentMutation,
@@ -10,6 +11,8 @@ import { TPaymentFailed } from "@/types/global";
 import { Button, Modal } from "antd";
 import { SetStateAction, useState } from "react";
 import { Spinner } from "react-bootstrap";
+import FailedContact from "../payment/FailedContact";
+
 interface TPaymentData {
   secure_token: string;
   msg_code: string;
@@ -56,6 +59,8 @@ interface TPaymentData {
 }
 
 const PaymentFailed = () => {
+  const [sonodId, setSonodId] = useState("");
+  const [failedPage, setFailedPage] = useState(false);
   const [callIpn, { isLoading: chckingIpn }] = useCallipnMutation();
   const [paymentData, setPaymentData] = useState<TPaymentData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -88,26 +93,34 @@ const PaymentFailed = () => {
     setLoadingTrxId(trx);
     try {
       const res = await checkPayment({ trnx_id: trx }).unwrap();
-      console.log(res.data.akpay);
+      setSonodId(res.data.myserver.sonodId);
       setPaymentData(res.data.akpay);
       setIsModalOpen(true);
+      console.log(res.data.akpay);
+      if (res.data.akpay.msg_code !== "1020") {
+        setFailedPage(true);
+        setLoadingTrxId(trx);
+      }
     } catch (error) {
       console.error("Error checking payment:", error);
-    } finally {
-      setLoadingTrxId(null);
-    }
+    } 
   };
 
   const handleRecallCheckPayment = async () => {
-    const res = await callIpn({ data: paymentData }).unwrap();
-    if (res.status_code == 200) {
-      refetch();
-      setIsModalOpen(false);
+    try {
+      const res = await callIpn({ data: paymentData }).unwrap();
+      if (res.status_code === 200) {
+        refetch();
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Error recalling payment check:", error);
     }
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setLoadingTrxId(null);
   };
 
   return (
@@ -143,7 +156,7 @@ const PaymentFailed = () => {
           </div>
           <div className="form-group col-md-3 my-1">
             <button
-              className="btn_main"
+              className=" btn btn-info"
               onClick={handleSearch}
               disabled={!selectedDate || !selectedService}
             >
@@ -321,9 +334,10 @@ const PaymentFailed = () => {
       </div>
 
       <Modal
-        // loading={}
+        // width={failedPage ? "w-100" : undefined}
         title="পেমেন্ট বিস্তারিত"
         open={isModalOpen}
+        className={failedPage ? "w-100" : undefined}
         onOk={handleCloseModal}
         onCancel={handleCloseModal}
         footer={[
@@ -335,8 +349,16 @@ const PaymentFailed = () => {
         <div>
           {paymentData?.msg_det}
 
+          {failedPage && loadingTrxId && (
+            <FailedContact
+              sonodId={sonodId}
+              transId={loadingTrxId}
+              className="w-100"
+            />
+          )}
+
           <div className=" mt-3">
-            {paymentData?.msg_code == "1020" && (
+            {paymentData?.msg_code === "1020" && (
               <Button
                 loading={chckingIpn}
                 type="primary"

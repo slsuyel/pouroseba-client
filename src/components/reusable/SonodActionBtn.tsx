@@ -7,6 +7,7 @@ import SingleSonodViewModal from "@/pages/dashboard/SonodManagement/SingleSonodV
 import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 import { updatePendingCount } from "@/redux/features/union/unionSlice";
+import SonodCancelModal from "../ui/SonodCancelModal";
 
 interface SonodActionBtnProps {
   sonodName: string | undefined;
@@ -21,9 +22,6 @@ const SonodActionBtn = ({
 }: SonodActionBtnProps) => {
   const dispatch = useAppDispatch();
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
-  // const handleUpdatePendingCount = (id: number, newPendingCount: number) => {
-  //   dispatch(updatePendingCount({ id, pendingCount: newPendingCount }));
-  // };
 
   const user = useAppSelector((state: RootState) => state.user.user);
   const token = localStorage.getItem("token");
@@ -32,7 +30,9 @@ const SonodActionBtn = ({
 
   const [view, setView] = useState(false);
   const [viewEn, setViewEn] = useState(false);
+  const [sonodCancelModal, setSonodCancelModal] = useState<boolean>(false);
   const [textareaValue, setTextareaValue] = useState(item?.prottoyon);
+
   const [textareaValueEn, setTextareaValueEn] = useState(
     item?.english_prottoyon
   );
@@ -110,8 +110,10 @@ const SonodActionBtn = ({
   };
 
   const handleCancelSonod = () => {
-    console.log(item.id);
+    setSonodCancelModal(true);
   };
+
+  console.log(user?.position == "position");
 
   const menu = (
     <Menu>
@@ -160,7 +162,8 @@ const SonodActionBtn = ({
         </Menu.Item>
       )}
 
-      {condition !== "cancel" && condition !== "approved" && (
+      {(user?.position === "Secretary" && condition === "cancel") ||
+      (condition !== "cancel" && condition !== "approved") ? (
         <Menu.Item
           className="border text-success border-warning my-1"
           key="approve"
@@ -168,7 +171,8 @@ const SonodActionBtn = ({
         >
           {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
         </Menu.Item>
-      )}
+      ) : null}
+
       <Menu.Item className="border my-1 border-success" key="invoice">
         <Link
           className="text-decoration-none"
@@ -191,7 +195,8 @@ const SonodActionBtn = ({
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap gap-2">
-        {condition !== "cancel" && condition !== "approved" && (
+        {(user?.position === "Secretary" ||
+          (condition !== "cancel" && condition !== "approved")) && (
           <button
             className="border border-warning btn btn-sm btn-success"
             key="approve"
@@ -200,6 +205,7 @@ const SonodActionBtn = ({
             {isLoading ? "অপেক্ষা করুন" : "অনুমোদন"}
           </button>
         )}
+
         <Dropdown overlay={menu} placement="bottomLeft" arrow>
           <Button type="primary">Actions</Button>
         </Dropdown>
@@ -268,6 +274,14 @@ const SonodActionBtn = ({
           )}
         </Modal>
       }
+
+      {sonodCancelModal && (
+        <SonodCancelModal
+          item={item}
+          setSonodCancelModal={setSonodCancelModal}
+          sonodCancelModal={sonodCancelModal}
+        />
+      )}
     </>
   );
 };

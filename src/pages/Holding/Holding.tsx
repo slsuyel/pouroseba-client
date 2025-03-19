@@ -1,7 +1,7 @@
 import RightSidebar from "../Home/RightSidebar";
 import { Link } from "react-router-dom";
 import { useAllHoldingFrontendQuery } from "@/redux/api/sonod/sonodApi";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent,  useEffect, useState } from "react";
 import { THolding } from "../dashboard/holding/HoldingShow";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
@@ -13,12 +13,8 @@ const Holding = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [selectedUnion, setSelectedUnion] = useState<TUnion | null>(null);
-  const [selectedDivision, setSelectedDivision] = useState<TDivision | null>(
-    null
-  );
-  const [selectedDistrict, setSelectedDistrict] = useState<TDistrict | null>(
-    null
-  );
+  const [selectedDivision, setSelectedDivision] = useState<TDivision | null>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<TDistrict | null>(null);
   const [selectedUpazila, setSelectedUpazila] = useState<TUpazila | null>(null);
   const [divisions, setDivisions] = useState<TDivision[]>([]);
   const [districts, setDistricts] = useState<TDistrict[]>([]);
@@ -48,7 +44,7 @@ const Holding = () => {
   const handlePageChange = (page: number, pageSize: number) => {
     setCurrentPage(page);
     setPageSize(pageSize);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -70,9 +66,7 @@ const Holding = () => {
           );
           setDistricts(filteredDistricts);
         })
-        .catch((error) =>
-          console.error("Error fetching districts data:", error)
-        );
+        .catch((error) => console.error("Error fetching districts data:", error));
     }
   }, [selectedDivision]);
 
@@ -86,9 +80,7 @@ const Holding = () => {
           );
           setUpazilas(filteredUpazilas);
         })
-        .catch((error) =>
-          console.error("Error fetching upazilas data:", error)
-        );
+        .catch((error) => console.error("Error fetching upazilas data:", error));
     }
   }, [selectedDistrict]);
 
@@ -147,6 +139,8 @@ const Holding = () => {
   const holdings = data?.data?.data || [];
   const totalItems = data?.data?.total || 0;
   const lastPage = data?.data?.last_page || 1; // Use last_page from the API
+
+
 
   // Conditionally render the Pagination component
   const showPagination = totalItems > pageSize && holdings.length > 0;
@@ -281,9 +275,7 @@ const Holding = () => {
             {isError ? (
               <Alert message="Error fetching data" type="error" />
             ) : isLoading || isFetching ? (
-              <>
-                <Loader />
-              </>
+              <><Loader /></>
             ) : (
               <>
                 <table className="table">
@@ -329,7 +321,7 @@ const Holding = () => {
                   <Pagination
                     current={currentPage}
                     pageSize={pageSize}
-                    total={lastPage * pageSize}
+                    total={lastPage*pageSize}
                     onChange={handlePageChange}
                     showSizeChanger
                     onShowSizeChange={handlePageChange}

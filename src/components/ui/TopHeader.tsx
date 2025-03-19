@@ -1,11 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
-import logo from "/main_logo.png";
+// import logo from "/main_logo.webp";
+// import logoUnionService from "/unionservices_logo.webp";
 import SearchBox from "../reusable/SearchBox";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 
 const TopHeader = () => {
   const unionData = useAppSelector((state: RootState) => state.union.unionInfo);
+  const baseUrl = window.origin;
+
+
+
 
   return (
     <>
@@ -24,7 +30,7 @@ const TopHeader = () => {
             >
               {new Date().toISOString().split("T")[0]}
             </span>{" "}
-            <span>Visitors : 36470</span>
+            <span>Visitors : 42470</span>
           </div>
         </div>
       </div>
@@ -32,8 +38,20 @@ const TopHeader = () => {
       <div className=" row mx-auto container">
         <div className="col-md-6 my-3 ps-0">
           <Link to={"/"}>
-            <img width={270} src={unionData?.web_logo || logo} alt="" />
+            <img 
+              onError={(e:any) => e.target.src = (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://pouroseba.gov.bd/main_logo.png")}
+              width={270}
+              src={`https://images.weserv.nl/?url=${encodeURIComponent(
+                unionData?.web_logo ||
+                (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://pouroseba.gov.bd/main_logo.webp")
+              )}`}
+              alt="Logo"
+              height="auto"
+            />
+
           </Link>
+
+
         </div>
         <div className="col-md-6  pe-0">
           <h3 className="defaltColor fs-4 searchHeader text-white">

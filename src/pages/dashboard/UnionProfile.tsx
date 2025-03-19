@@ -8,12 +8,17 @@ import { TUnionInfo } from "@/types";
 import Breadcrumbs from "@/components/reusable/Breadcrumbs";
 import Loader from "@/components/reusable/Loader";
 import { useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/redux/features/hooks";
+import { setUnionData } from "@/redux/features/union/unionSlice";
+import { RootState } from "@/redux/features/store";
 
 const UnionProfile = () => {
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const token = localStorage.getItem("token");
   const { data, isLoading } = useUnionProfileQuery({ token });
   const [updateUnion, { isLoading: updating }] = useUpdateUnionMutation();
+  const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const [form] = Form.useForm();
 
   const [files, setFiles] = useState({
@@ -142,20 +147,27 @@ const UnionProfile = () => {
     });
 
     // Debugging: Log FormData contents
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+    // for (const [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
 
     try {
       const res = await updateUnion({ data: formData, token }).unwrap();
       if (res.status_code === 200) {
-        message.success("তথ্য সফলভাবে আপডেট করা হয়েছে।");
+        console.log(res.data.data);
+          dispatch(
+            setUnionData({
+              unionInfo: res.data.data,
+              sonodList: sonodInfo,
+            })
+          );
+        message.success("পৌরসভা তথ্য সফলভাবে আপডেট করা হয়েছে।");
       } else {
         message.error("Failed to update  information.");
       }
     } catch (error) {
-      console.error("Failed updating :", error);
-      message.error("Failed to update  information. Please try again.");
+      console.error("Failed updating union:", error);
+      message.error("Failed to update union information. Please try again.");
     }
   };
 
@@ -166,13 +178,13 @@ const UnionProfile = () => {
   return (
     <div className="card p-3 border-0">
       {location.pathname == "/dashboard/union/profile" && (
-        <Breadcrumbs current="পৌরসভা  প্রোফাইল" />
+        <Breadcrumbs current="পৌরসভা প্রোফাইল" />
       )}
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <div className="card-body">
           <div className="row">
             <div className="col-md-4">
-              <Form.Item label="পৌরসভার  পুরো নাম (বাংলা)" name="full_name">
+              <Form.Item label="পৌরসভার পুরো নাম (বাংলা)" name="full_name">
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -182,7 +194,10 @@ const UnionProfile = () => {
               </Form.Item>
             </div>
             <div className="col-md-4">
-              <Form.Item label="পৌরসভার  পুরো নাম (ইংরেজি)" name="full_name_en">
+              <Form.Item
+                label="পৌরসভার পুরো নাম (ইংরেজি)"
+                name="full_name_en"
+              >
                 <Input
                   style={{ height: 40 }}
                   onChange={handleChange}
@@ -193,7 +208,7 @@ const UnionProfile = () => {
             </div>
             <div className="col-md-4">
               <Form.Item
-                label="পৌরসভার  সংক্ষিপ্ত নাম (বাংলা)"
+                label="পৌরসভার সংক্ষিপ্ত নাম (বাংলা)"
                 name="short_name_b"
               >
                 <Input
@@ -379,6 +394,7 @@ const UnionProfile = () => {
                 {files.web_logo && (
                   <img
                     width={250}
+                    height={"auto"}
                     alt="Web Logo"
                     className="img-thumbnail img-fluid"
                     src={files.web_logo}
@@ -398,6 +414,7 @@ const UnionProfile = () => {
                 {files.sonod_logo && (
                   <img
                     width={250}
+                    height={"auto"}
                     alt="Sonod Logo"
                     className="img-thumbnail img-fluid"
                     src={files.sonod_logo}
@@ -417,6 +434,7 @@ const UnionProfile = () => {
                 {files.c_signture && (
                   <img
                     width={250}
+                    height={"auto"}
                     alt="Chairman Signature"
                     className="img-thumbnail img-fluid"
                     src={files.c_signture}
@@ -435,7 +453,7 @@ const UnionProfile = () => {
                 />
                 {files.socib_signture && (
                   <img
-                    width={250}
+                    width={250} height={"auto"}
                     alt="Secretary Signature"
                     className="img-thumbnail img-fluid"
                     src={files.socib_signture}
@@ -454,7 +472,7 @@ const UnionProfile = () => {
                 />
                 {files.u_image && (
                   <img
-                    width={250}
+                    width={250} height={"auto"}
                     alt="Union Image"
                     className="img-thumbnail img-fluid"
                     src={files.u_image}

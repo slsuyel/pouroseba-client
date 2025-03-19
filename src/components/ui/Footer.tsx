@@ -36,8 +36,11 @@ const footerLinks = [
   },
 ];
 import sos from "../../assets/icons/sos.png";
-import ekpay from "../../assets/images/ekpay.png";
+import ekpay from "../../assets/images/ekpay.webp";
+import { CheckCircleOutlined } from "@ant-design/icons";
+
 const Footer = () => {
+  const baseUrl = window.origin;
   return (
     <>
       <div className="row mx-auto container">
@@ -53,7 +56,7 @@ const Footer = () => {
               >
                 {section.links.map((link, idx) => (
                   <li key={idx}>
-                    <i className="fas fa-check-circle" /> &nbsp;
+                    <CheckCircleOutlined className="defaltTextColor me-1" />
                     <a
                       href={link.url}
                       title={link.text}
@@ -93,12 +96,15 @@ const Footer = () => {
                   <img
                     loading="lazy"
                     src="/bangladesh-govt.png"
-                    alt=""
+                    alt="bangladesh"
+                    height={"auto"}
                     width={50}
                   />{" "}
                   <span style={{ padding: "0px 15px" }}>
-                    <b> ব্যবস্থাপনা ও তত্ত্বাবধানে:</b> <br /> জেলা প্রশাসন,
-                    পঞ্চগড়।
+                    <b> ব্যবস্থাপনা ও তত্ত্বাবধানে:</b> <br />
+                    {baseUrl.includes("unionservices")
+                      ? "বিভাগীয় কমিশনারের কার্যালয়, রংপুর"
+                      : " জেলা প্রশাসন,পঞ্চগড়। "}
                   </span>
                 </li>
               </ul>
@@ -112,7 +118,7 @@ const Footer = () => {
                     alignItems: "center",
                   }}
                 >
-                  <img loading="lazy" src={sos} alt="" width={40} />{" "}
+                  <img loading="lazy" src={sos} alt="sys" width={40}  height={"auto"} />{" "}
                   <span style={{ padding: "0px 15px" }}>
                     <b> কারিগরি সহায়তায়:</b> <br />{" "}
                     <a
@@ -132,7 +138,7 @@ const Footer = () => {
         <div className="footerpayment row">
           <div className="col-md-2" />{" "}
           <div className="col-md-8">
-            <img loading="lazy" src={ekpay} width="100%" alt="" />
+            <img loading="lazy" src={ekpay} width="100%"  height={"auto"} alt="sys" />
           </div>{" "}
           <div className="col-md-2" />
         </div>
