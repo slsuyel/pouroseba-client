@@ -100,6 +100,29 @@ const authApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    setBankAccount: builder.mutation({
+      query: ({ data,token }) => ({
+        url: `/user/bank-accounts`,
+        method: "POST",
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags:["bank-details"]
+    }),
+
+    bankDetails: builder.query({
+      query: (token ) => ({
+        url: `/user/bank-accounts`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["bank-details"] as any,
+    }),
+
   }),
 });
 
@@ -114,4 +137,6 @@ export const {
   useResetPassLinkMutation,
   useChangePasswordMutation,
   useUddoktaTokenCheckQuery,
+  useSetBankAccountMutation,
+  useBankDetailsQuery
 } = authApi;

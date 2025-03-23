@@ -34,7 +34,7 @@ const ServiceBox = () => {
       </div>
 
       <div className="row g-3">
-        {sonodInfo.map((service, index) => (
+        {sonodInfo?.map((service, index) => (
           <div key={index} className="col-lg-2 col-md-3 col-sm-4 col-6">
             <button
               onClick={() => handleService(service.bnname)}
