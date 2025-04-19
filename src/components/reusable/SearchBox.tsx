@@ -1,137 +1,68 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TDistrict, TDivision } from "@/types";
-import React, { useEffect, useState } from "react";
-import { Form, Select } from "antd";
+import React from "react";
+import { useAppSelector } from "@/redux/features/hooks"
+import type { RootState } from "@/redux/features/store"
+import PouroLocationSelector from "./Locations/PouroLocationSelector";
+import UnionLocationSelector from "./Locations/UnionLocationSelector";
+interface SearchBoxProps {
+  unionname: string;
+  service: string;
+  id: string | number;
+}
 
-const { Option } = Select;
 
-const SearchBox: React.FC = () => {
-  const [selecteddivisions, setSelectedDivisions] = useState<
-    string | undefined
-  >(undefined);
-  const [selectedDistrict, setSelectedDistrict] = useState<string | undefined>(
-    undefined
-  );
-  const [divisions, setDivisions] = useState<TDivision[]>([]);
-  const [districts, setDistricts] = useState<TDistrict[]>([]);
-  const [pourosebas, setPourosebas] = useState<any[]>([]);
 
-  useEffect(() => {
-    fetch("/divisions.json")
-      .then((res) => res.json())
-      .then((data: TDivision[]) => setDivisions(data))
-      .catch((error) => console.error("Error fetching divisions data:", error));
-  }, []);
+const SearchBox: React.FC<SearchBoxProps> = ({ unionname,service, id }) => {
 
-  useEffect(() => {
-    if (selecteddivisions) {
-      fetch("/districts.json")
-        .then((response) => response.json())
-        .then((data: TDistrict[]) => {
-          const filteredDistricts = data.filter(
-            (d) => d.division_id === selecteddivisions
-          );
-          setDistricts(filteredDistricts);
-        })
-        .catch((error) =>
-          console.error("Error fetching districts data:", error)
-        );
-    } else {
-      setDistricts([]); // Clear districts when no division is selected
-    }
-  }, [selecteddivisions]);
+    const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+    const baseUrl = window.origin;
+      const handleUnionSelect = (union: string) => {
+    
+        if(unionname){
+           union = unionname.replace(/\s+/g, "").toLowerCase();
+        }else{
+           union = union.replace(/\s+/g, "").toLowerCase();
+        }
+    
+        if (service) {
+          if (id) {
+            if (baseUrl.includes("uniontax")) {
+              window.location.href = `https://${union}.uniontax.gov.bd/application/${service}?id=${id}`;
+            } else if (baseUrl.includes("unionservices")) {
+              window.location.href = `https://${union}.unionservices.gov.bd/application/${service}?id=${id}`;
+            } else {
+               window.location.href = `http://${union}.${baseUrl.split("//")[1]}/application/${service}?id=${id}`
+            }
+          } else {
+            if (baseUrl.includes("uniontax")) {
+              window.location.href = `https://${union}.uniontax.gov.bd/application/${service}`;
+            } else if (baseUrl.includes("unionservices")) {
+              window.location.href = `https://${union}.unionservices.gov.bd/application/${service}`;
+            } else {
+              window.location.href = `http://${union}.${baseUrl.split("//")[1]}/application/${service}`
+            }
+          }
+        } else {
+          if (baseUrl.includes("uniontax")) {
+            window.location.href = `https://${union}.uniontax.gov.bd`;
+          } else if (baseUrl.includes("unionservices")) {
+            window.location.href = `https://${union}.unionservices.gov.bd`;
+          } else {
+            window.location.href = `http://${union}.${baseUrl.split("//")[1]}`;
+          }
+        }
+      }
 
-  useEffect(() => {
-    if (selectedDistrict) {
-      fetch("/pouroseba.json")
-        .then((response) => response.json())
-        .then((data: any[]) => {
-          const filteredUpazilas = data.filter(
-            (upazila) => upazila.district_id === selectedDistrict
-          );
-          setPourosebas(filteredUpazilas);
-        })
-        .catch((error) =>
-          console.error("Error fetching upazilas data:", error)
-        );
-    } else {
-      setPourosebas([]); // Clear pourosebas when no district is selected
-    }
-  }, [selectedDistrict]);
+      return (
+        <>
+            {site_settings?.union === "false" ? (
+                <PouroLocationSelector onUnionSelect={handleUnionSelect} />
+              ) : (
+                <UnionLocationSelector onUnionSelect={handleUnionSelect} />
+              )}
+        </>
 
-  const handleDivChange = (value: string) => {
-    setSelectedDivisions(value);
-    setSelectedDistrict(undefined); // Reset district when division changes
-  };
-
-  const handleDistrictChange = (value: string) => {
-    setSelectedDistrict(value);
-  };
-
-  const handlePourosebaChange = (value: string) => {
-    const pouroseba = value.replace(/\s+/g, "").toLowerCase();
-    console.log(pouroseba);
-    window.location.href = `http://${pouroseba}.pouroseba.gov.bd`;
-  };
-
-  return (
-    <Form>
-      <div className="row">
-        {/* Division Field */}
-        <div className="col-4">
-          <Form.Item>
-            <Select
-              value={selecteddivisions}
-              onChange={handleDivChange}
-              placeholder="বিভাগ নির্বাচন করুন"
-            >
-              {divisions?.map((d) => (
-                <Option key={d.id} value={d.id}>
-                  {d.bn_name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </div>
-
-        {/* District Field */}
-        <div className="col-4">
-          <Form.Item>
-            <Select
-              placeholder="জেলা নির্বাচন করুন"
-              value={selectedDistrict}
-              onChange={handleDistrictChange}
-              disabled={!selecteddivisions}
-            >
-              {districts?.map((d) => (
-                <Option key={d.id} value={d.id}>
-                  {d.bn_name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </div>
-
-        {/* Pouroseba Field */}
-        <div className="col-4">
-          <Form.Item>
-            <Select
-              placeholder="পৌরসভা নির্বাচন করুন"
-              onChange={handlePourosebaChange}
-              disabled={!selectedDistrict}
-              value={undefined} // Ensure placeholder is shown when no value is selected
-            >
-              {pourosebas.map((pouroseba) => (
-                <Option key={pouroseba.id} value={pouroseba.name}>
-                  {pouroseba.bn_name} পৌরসভা
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </div>
-      </div>
-    </Form>
-  );
+      );
 };
 
 export default SearchBox;

@@ -8,15 +8,17 @@ import { RootState } from "@/redux/features/store";
 import { message, Modal } from "antd";
 import SearchBox from "../reusable/SearchBox";
 
+
 const Header = () => {
   const userInfo = useAppSelector((state: RootState) => state.user.user);
   const [noUnion, setNoUnion] = useState(false);
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
 
   const navItems = [
     { title: "হোম", link: "/" },
-    { title: "ইউপি সেবা পরিচিতি", link: "about" },
+    { title:  site_settings?.about_title || "", link: "about" },
     {
       title: "নাগরিক সেবা",
       dropdown: sonodInfo?.map((sonod) => ({
@@ -54,8 +56,8 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleService = (serviceLink: string) => {
-    if (unionInfo?.short_name_e == "pouroseba") {
-      message.warning("পৌরসভা  নির্বাচন করুন");
+    if (unionInfo?.short_name_e == "uniontax") {
+      message.warning(site_settings?.header_union_select_title || "");
       setNoUnion(true);
       return;
     }
@@ -130,7 +132,7 @@ const Header = () => {
       <div className="container mx-auto row">
         <Marquee className="defaltColor py-1 text-white">
           <span style={{ fontSize: 16 }}>
-            পৌরসভা পরিষদের ডিজিটাল অনলাইন সেবা সিস্টেম pouroseba.gov.bd –তে
+            ইউনিয়ন পরিষদের ডিজিটাল অনলাইন সেবা সিস্টেম uniontax.gov.bd –তে
             আপনাকে স্বাগতম।
           </span>
         </Marquee>
@@ -143,9 +145,9 @@ const Header = () => {
         footer={null}
         animation="fade-down"
       >
-        <div style={{ zIndex: 999 }} className=" py-3">
-          <h3 className="">পৌরসভা নির্বাচন করুন </h3>
-          <SearchBox />
+        <div style={{ zIndex: 999 }} className="py-3">
+          <h3 className="">{site_settings?.header_union_select_title || ""}</h3>
+            <SearchBox service={""} id={""} unionname={""} />
         </div>
       </Modal>
     </>

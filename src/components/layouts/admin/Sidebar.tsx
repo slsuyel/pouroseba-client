@@ -27,8 +27,8 @@ type SidebarItemWithoutSubmenu = SidebarItemBase & {
 
 export type SidebarItem = SidebarItemWithSubmenu | SidebarItemWithoutSubmenu;
 
-const Sidebar = () => {
-  const user = useAppSelector((state: RootState) => state.user.user);
+const Sidebar = ({user}:{user:any}) => {
+  
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList);
 
   const sidebarItems: SidebarItem[] = [
@@ -41,7 +41,7 @@ const Sidebar = () => {
     { key: "reports", title: "সকল প্রতিবেদন", slug: "/reports" },
     {
       key: "profile",
-      title: "পৌরসভা  প্রোফাইল",
+      title: "ইউনিয়ন প্রোফাইল",
       slug: "/union/profile",
     },
     { key: "tax", title: "হোল্ডিং ট্যাক্স", slug: "/holding/tax/" },

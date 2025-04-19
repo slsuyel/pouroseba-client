@@ -28,7 +28,7 @@ const SonodSearchById = () => {
       "shohorgram",
     ];
     if (restrictedUnions.includes(union) && numericId <= 30000) {
-      window.location.href = `https://oldbirol.pouroseba.gov.bd/verification/sonod/${numericId}`
+      window.location.href = `https://oldbirol.uniontax.gov.bd/verification/sonod/${numericId}`
     }
   }, [union, numericId]);
 

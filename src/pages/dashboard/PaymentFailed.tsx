@@ -174,7 +174,7 @@ const PaymentFailed = () => {
               <tr>
                 <th>আইডি</th>
                 <th>সনদ আইডি</th>
-                <th>পৌরসভা </th>
+                <th>ইউনিয়ন</th>
                 <th>লেনদেন আইডি</th>
                 <th>সনদ প্রকার</th>
                 <th>তারিখ</th>
@@ -260,7 +260,7 @@ const PaymentFailed = () => {
                     <strong>সনদ আইডি:</strong> {item.sonodId}
                   </p>
                   <p>
-                    <strong>পৌরসভা :</strong> {item.union}
+                    <strong>ইউনিয়ন:</strong> {item.union}
                   </p>
                   <p>
                     <strong>লেনদেন আইডি:</strong> {item.trxId}

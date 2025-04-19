@@ -88,7 +88,7 @@ const SearchTimeline = ({ data }: any) => {
               <td>{sonod.applicant_national_id_number}</td>
             </tr>
             <tr>
-              <td>পৌরসভার নাম</td> <td>{sonod.unioun_name}</td>
+              <td>ইউনিয়নের নাম</td> <td>{sonod.unioun_name}</td>
             </tr>
             <tr>
               <td>জন্ম নিবন্ধন নম্বর</td>{" "}

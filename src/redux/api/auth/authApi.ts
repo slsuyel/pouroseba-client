@@ -14,14 +14,6 @@ const authApi = apiSlice.injectEndpoints({
       invalidatesTags: ["profileCreate"] as any,
     }),
 
-    // userLogin: builder.mutation({
-    //   query: ({ email, password, endpoint }) => ({
-    //     url: `/auth/user/login`,
-    //     method: "POST",
-    //     body: { email, password },
-    //   }),
-    //   invalidatesTags: ["profileCreate"] as any,
-    // }),
     userLogin: builder.mutation({
       query: ({ email, password, endpoint }) => ({
         url: `/auth/${endpoint}`,
@@ -59,6 +51,50 @@ const authApi = apiSlice.injectEndpoints({
         url: `/user/password/reset`,
         method: "POST",
         body: data,
+      }),
+    }),
+    setBankAccount: builder.mutation({
+      query: ({ data, token }) => ({
+        url: `/user/bank-accounts`,
+        method: "POST",
+        body: data,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ["bank-details"],
+    }),
+
+    bankDetails: builder.query({
+      query: (token) => ({
+        url: `/user/bank-accounts`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: ["bank-details"] as any,
+    }),
+
+
+    villageList: builder.query({
+      query: ({ token, word_no }) => ({
+        url: `/user/unioun-info/village`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        params: {
+          word_no, // Send word_no as query parameter
+        },
+      }),
+    }),
+    
+
+    postOfficeList: builder.query({
+      query: (token) => ({
+        url: `/user/unioun-info/post-office`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       }),
     }),
 
@@ -100,29 +136,6 @@ const authApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-
-    setBankAccount: builder.mutation({
-      query: ({ data,token }) => ({
-        url: `/user/bank-accounts`,
-        method: "POST",
-        body: data,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }),
-      invalidatesTags:["bank-details"]
-    }),
-
-    bankDetails: builder.query({
-      query: (token ) => ({
-        url: `/user/bank-accounts`,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }),
-      providesTags: ["bank-details"] as any,
-    }),
-
   }),
 });
 
@@ -138,5 +151,7 @@ export const {
   useChangePasswordMutation,
   useUddoktaTokenCheckQuery,
   useSetBankAccountMutation,
-  useBankDetailsQuery
+  useBankDetailsQuery,
+  useVillageListQuery,
+  usePostOfficeListQuery,
 } = authApi;

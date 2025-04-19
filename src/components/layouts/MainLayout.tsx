@@ -15,7 +15,7 @@
 // const MainLayout = () => {
 //   const token = localStorage.getItem("token");
 //   const dispatch = useAppDispatch();
-//   const [unionName, setUnionName] = useState("pouroseba");
+//   const [unionName, setUnionName] = useState("uniontax");
 //   const navigate = useNavigate();
 //   const { data, isLoading } = useUnionInfoQuery(
 //     { unionName, token },
@@ -64,7 +64,7 @@
 
 // export default MainLayout;
 
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "../ui/Header";
 import Footer from "../ui/Footer";
 import ScrollToTop from "@/utils/ScrollToTop";
@@ -83,25 +83,32 @@ import Chatbot from "../ui/Chatbot";
 const MainLayout = () => {
   const token = localStorage.getItem("token");
   const dispatch = useAppDispatch();
-  const [unionName, setUnionName] = useState("pouroseba");
+
+  const hostname = window.location.hostname;
+  let union = hostname.split(".")[0];
+  if (union === "localhost" || union === "uniontax" || union === "unionservices" || union === "pouroseba") {
+    union = 'root';
+  }
+  const [unionName] = useState(union);
+
   const [defaultColor, setDefaultColor] = useState("green");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo);
   const { data, isLoading } = useUnionInfoQuery(
     { unionName, token },
     // {
-    //   skip: unionName =='pouroseba',
+    //   skip: unionName =='uniontax',
     // }
   );
 
-  useEffect(() => {
-    const hostname = window.location.hostname;
-    const union = hostname.split(".")[0];
-    if (union !== "localhost") {
-      setUnionName(union);
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const hostname = window.location.hostname;
+  //   const union = hostname.split(".")[0];
+  //   if (union !== "localhost") {
+  //     setUnionName(union);
+  //   }
+  // }, [navigate]);
 
   useEffect(() => {
     if (data?.data?.uniouninfos?.defaultColor) {
@@ -115,6 +122,7 @@ const MainLayout = () => {
         setUnionData({
           unionInfo: data.data.uniouninfos,
           sonodList: data.data.sonod_name_lists,
+          site_settings: data.data.site_settings,
         })
       );
     }

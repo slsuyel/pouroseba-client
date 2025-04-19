@@ -26,11 +26,11 @@ const footerLinks = [
   {
     title: "ইজারা নোটিশ বোর্ড",
     links: [
-      { text: "৭নং দেবনগড় পৌরসভা ের পাথরবালি ইজারা", url: "/tenderview/9" },
+      { text: "৭নং দেবনগড় ইউনিয়নের পাথরবালি ইজারা", url: "/tenderview/9" },
       { text: "“বিবিধ পণ্য পরিবহনের উপর পারমিট ফিস”", url: "/tenderview/8" },
       { text: "“পশু জবাই ফিস”", url: "/tenderview/7" },
       { text: "বিবিধ পণ্য পরিবহন পারমটি ফিস", url: "/tenderview/4" },
-      { text: "0৭নং দেবনগড় পৌরসভা ের পাথরবালি ইজারা", url: "/tenderview/3" },
+      { text: "0৭নং দেবনগড় ইউনিয়নের পাথরবালি ইজারা", url: "/tenderview/3" },
       { text: "তেতুলিয়া মহানন্দা নদীর পাথরঘাট ইজারা", url: "/tenderview/2" },
     ],
   },

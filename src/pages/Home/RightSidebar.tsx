@@ -13,12 +13,12 @@ const RightSidebar = () => {
   return (
     <>
       {unionInfo &&
-        !["pouroseba", "unionservices"].includes(
+        !["uniontax", "unionservices"].includes(
           unionInfo.short_name_e as string
         ) ? (
         <div className="pt-3 col-md-3 services">
           <div className={`sidebarTitle mb-3 ${unionInfo.defaultColor}`}>
-            <h4>এক নজরে {unionInfo.short_name_b} পৌরসভা</h4>
+            <h4>এক নজরে {unionInfo.short_name_b} ইউনিয়ন</h4>
           </div>
           <div className="">
             <img

@@ -6,9 +6,13 @@ import SearchBox from "../reusable/SearchBox";
 import { useAppSelector } from "@/redux/features/hooks";
 import { RootState } from "@/redux/features/store";
 
+
 const TopHeader = () => {
   const unionData = useAppSelector((state: RootState) => state.union.unionInfo);
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings);
+
   const baseUrl = window.origin;
+
 
 
 
@@ -18,7 +22,7 @@ const TopHeader = () => {
       <div className=" container mx-auto">
         <div className="row mx-auto topHeader">
           <div className="topheaderItem col-md-6 col-6">
-            <span>পৌরসভা পরিষদ ক্যাশলেস সেবা সিস্টেমে স্বাগতম</span>
+            <span> {site_settings?.header_title || ""}</span>
           </div>{" "}
           <div className="topheaderItem col-md-6 col-6 text-end">
             <span
@@ -39,11 +43,11 @@ const TopHeader = () => {
         <div className="col-md-6 my-3 ps-0">
           <Link to={"/"}>
             <img 
-              onError={(e:any) => e.target.src = (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://pouroseba.gov.bd/main_logo.png")}
+              onError={(e:any) => e.target.src = (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://uniontax.gov.bd/main_logo.webp")}
               width={270}
               src={`https://images.weserv.nl/?url=${encodeURIComponent(
                 unionData?.web_logo ||
-                (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://pouroseba.gov.bd/main_logo.webp")
+                (baseUrl.includes("unionservices") ? "https://unionservices.gov.bd/unionservices_logo.webp" : "https://uniontax.gov.bd/main_logo.webp")
               )}`}
               alt="Logo"
               height="auto"
@@ -55,9 +59,9 @@ const TopHeader = () => {
         </div>
         <div className="col-md-6  pe-0">
           <h3 className="defaltColor fs-4 searchHeader text-white">
-            পৌরসভা নির্বাচন করুন{" "}
+          {site_settings?.header_union_select_title || ""}{" "}
           </h3>
-          <SearchBox />
+            <SearchBox service={""} id={""} unionname={""} />
         </div>
       </div>
     </>

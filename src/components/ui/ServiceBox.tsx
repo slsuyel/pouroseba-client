@@ -9,20 +9,25 @@ import { useState } from "react"
 import SearchBox from "../reusable/SearchBox"
 import './service-box.css'
 
+
+
 const ServiceBox = () => {
   const [noUnion, setNoUnion] = useState(false)
   const sonodInfo = useAppSelector((state: RootState) => state.union.sonodList)
   const unionInfo = useAppSelector((state: RootState) => state.union.unionInfo)
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings)
+    const [selectedService, setSelectedService] = useState<string | null>(null)
 
   const navigate = useNavigate()
 
   const handleService = (service: string) => {
-    console.log(unionInfo)
 
-    if (unionInfo?.short_name_e === "pouroseba") {
-      message.warning("অনুগ্রহ করে আপনার পৌরসভা  নির্বাচন করুন");
-      setNoUnion(true);
-      return;
+
+    if (unionInfo?.short_name_e === "uniontax") {
+      message.warning("অনুগ্রহ করে আপনার ইউনিয়ন নির্বাচন করুন")
+      setNoUnion(true)
+      setSelectedService(service)
+      return
     }
     navigate(`/application/${service}`)
   }
@@ -34,7 +39,7 @@ const ServiceBox = () => {
       </div>
 
       <div className="row g-3">
-        {sonodInfo?.map((service, index) => (
+        {sonodInfo.map((service, index) => (
           <div key={index} className="col-lg-2 col-md-3 col-sm-4 col-6">
             <button
               onClick={() => handleService(service.bnname)}
@@ -55,10 +60,12 @@ const ServiceBox = () => {
 
       <div className="col-md-12 mt-5">
         <h5 className="service-section-title position-relative ps-3 py-2 text-white rounded-2">
-        ক্যাশলেস পৌরসভা পরিষদ সেবা
+        {site_settings?.history_title || ""}
         </h5>
 
-        <p></p>
+        <p className="mt-3 lh-base">
+        {site_settings?.history || ""}
+        </p>
       </div>
 
       <Modal
@@ -68,9 +75,9 @@ const ServiceBox = () => {
         footer={null}
         animation="fade-down"
       >
-        <div style={{ zIndex: 999 }} className=" py-3">
-          <h3 className="">পৌরসভা নির্বাচন করুন </h3>
-          <SearchBox />
+        <div style={{ zIndex: 999 }} className="py-3">
+          <h3 className="">{site_settings?.header_union_select_title || ""} </h3>
+          <SearchBox   service={selectedService ?? ""} id={""}  unionname={""}  />
         </div>
       </Modal>
     </div>

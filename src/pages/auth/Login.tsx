@@ -8,9 +8,16 @@ import { useAppDispatch } from "@/redux/features/hooks";
 import { useGetUnionInfoMutation } from "@/redux/api/user/userApi";
 import { setUnionData } from "@/redux/features/union/unionSlice";
 
+import type { RootState } from "@/redux/features/store"
+import { useAppSelector } from "@/redux/features/hooks"
+
+
 type LoginType = "chairman" | "entrepreneur" | "secretary";
 
 const Login = () => {
+  const site_settings = useAppSelector((state: RootState) => state.union.site_settings)
+
+
   // const user = useAppSelector((state: RootState) => state.user.user);
   const [userLogin, { isLoading }] = useUserLoginMutation();
   const navigate = useNavigate();
@@ -118,8 +125,8 @@ const Login = () => {
   };
 
   const tabItems = [
-    { label: "নির্বাহী কর্মকর্তা লগইন", key: "secretary" },
-    { label: "প্রশাসক লগইন", key: "chairman" },
+    { label: site_settings?.secritary_login_text || "", key: "secretary" },
+    { label: site_settings?.chairman_login_text || "", key: "chairman" },
     { label: "নিয়মিত ব্যবহারকারী ", key: "entrepreneur" },
   ];
 
